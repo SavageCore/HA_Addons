@@ -1,0 +1,31 @@
+name: "Alexa Shopping List Sync"
+description: "Sync your Alexa Shopping List with Home Assistant"
+version: "0.0.0"
+slug: "alexa_shopping_list_sync"
+init: false
+url: "https://github.com/SavageCore/HA_Addons/tree/main/alexa_shopping_list_sync"
+arch:
+  - armhf
+  - armv7
+  - aarch64
+  - amd64
+  - i386
+startup: services
+ports:
+  5000/tcp: 5000
+options:
+  email: "joe.bloggs@example.com"
+  password: "hunter2"
+  mfa_secret: "OTP Secret"
+  login_url: "https://www.amazon.co.uk/ap/signin?openid.pape.max_auth_age=3600&openid.return_to=https%3A%2F%2Fwww.amazon.co.uk%2Falexaquantum%2Fsp%2FalexaShoppingList&openid.identity=http%3A%2F%2Fspecs.openid.net%2Fauth%2F2.0%2Fidentifier_select&openid.assoc_handle=amzn_alexa_quantum_uk&openid.mode=checkid_setup&language=en_GB&openid.claimed_id=http%3A%2F%2Fspecs.openid.net%2Fauth%2F2.0%2Fidentifier_select&openid.ns=http%3A%2F%2Fspecs.openid.net%2Fauth%2F2.0"
+  list_url: "https://www.amazon.co.uk/alexaquantum/sp/alexaShoppingList"
+  ha_token: ""
+  ha_url: "ws://homeassistant.local:8123/api/websocket"
+schema:
+  email: str
+  password: password
+  mfa_secret: password
+  login_url: str
+  list_url: str
+  ha_token: str
+  ha_url: str
