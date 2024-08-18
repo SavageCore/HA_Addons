@@ -1,14 +1,15 @@
 # Home Assistant Addons
 
-[![Add repository on my Home Assistant][repository-badge]][repository-url]
+[![Add repository on my Home Assistant][my-ha-badge]][my-ha-url]
+
+If you want to add the repository manually, please follow the procedure on the <a href="https://www.home-assistant.io/common-tasks/os#installing-a-third-party-add-on-repository" target="_blank">Home Assistant website</a>. Use the following URL to add this repository: `https://github.com/SavageCore/HA_Addons`
 
 Like my work? Consider buying me a coffee!
 
-[![ko-fi](https://ko-fi.com/img/githubbutton_sm.svg)](https://ko-fi.com/E1E6P7VIQ)
+[![Support me on ko-fi][ko-fi-badge]][ko-fi-url]
 
-## Add-ons
+## Add-ons provided by this repository
 
-This repository contains the following add-ons
 
 [Alexa Shopping List Sync](https://github.com/SavageCore/HA_Addons/tree/main/alexa_shopping_list_sync) - A Home Assistant add-on to sync Alexa shopping list with Home Assistant shopping list.
 
@@ -24,5 +25,8 @@ This repository contains the following add-ons
 [armv7-shield]: https://img.shields.io/badge/armv7-yes-green.svg?logo=arm
 [i386-shield]: https://img.shields.io/badge/i386-yes-green.svg?logo=intel
 
-[repository-badge]: https://img.shields.io/badge/Add%20repository%20to%20my-Home%20Assistant-41BDF5?logo=home-assistant&style=for-the-badge
-[repository-url]: https://my.home-assistant.io/redirect/supervisor_add_addon_repository/?repository_url=https%3A%2F%2Fgithub.com%2FSavageCore%2FHA_Addons
+[ko-fi-badge]: https://ko-fi.com/img/githubbutton_sm.svg
+[ko-fi-url]: https://ko-fi.com/E1E6P7VIQ
+[my-ha-badge]: https://img.shields.io/badge/Add%20repository%20to%20my-Home%20Assistant-41BDF5?logo=home-assistant&style=for-the-badge
+[repository-url]: https://github.com/SavageCore/HA_Addons
+[my-ha-url]: https://my.home-assistant.io/redirect/supervisor_add_addon_repository/?repository_url=https%3A%2F%2Fgithub.com%2FSavageCore%2FHA_Addons
