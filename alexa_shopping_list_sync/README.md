@@ -5,6 +5,10 @@
 
 A Home Assistant add-on to sync Alexa shopping list with Home Assistant shopping list.
 
+Like my work? Consider buying me a coffee!
+
+[![ko-fi](https://ko-fi.com/img/githubbutton_sm.svg)](https://ko-fi.com/E1E6P7VIQ)
+
 ## Setup
 You must use an Amazon account that has 2-step verification enabled.
 
