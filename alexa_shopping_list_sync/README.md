@@ -73,6 +73,7 @@ automation:
       data_template:
         item: "{{ trigger.event.data.item.name }}"
 
+  #  This automation is commented out until I can figure out how to get the old item name. It's being tracked here: https://github.com/SavageCore/HA_Addons/issues/1
   # - id: 8ca2d6b3-97db-4465-b48d-26facff1853e
   #   alias: "ASLS: Update shopping list item on Alexa"
   #   trigger:
