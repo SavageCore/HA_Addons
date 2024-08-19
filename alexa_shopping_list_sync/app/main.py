@@ -82,7 +82,7 @@ def get_mfa_code() -> str:
 
 def get_shopping_list(driver: Driver) -> list:
     """Get the shopping list."""
-    driver.get(config["list_url"])  # Assuming the driver config is accessible
+    driver.get(config["list_url"])
     shopping_list_items = driver.find_elements(
         By.CSS_SELECTOR, ".virtual-list .item-title"
     )
@@ -91,7 +91,7 @@ def get_shopping_list(driver: Driver) -> list:
 
 async def update_local_shopping_list(driver: Driver, config) -> None:
     """Update the local shopping list."""
-    shopping_list = get_shopping_list(driver)  # Use the function from utils
+    shopping_list = get_shopping_list(driver)
 
     ha_ws = HomeAssistantWebsocket(config["ha_url"], config["ha_token"], logger=logger)
 
@@ -280,6 +280,7 @@ async def main():
         logger.error(f"Error starting scheduler: {e}")
 
 
+# Run the Flask app with Hypercorn
 hyper_config = Config()
 hyper_config.bind = ["0.0.0.0:5000"]
 
