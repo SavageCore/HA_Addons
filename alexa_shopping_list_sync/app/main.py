@@ -91,7 +91,7 @@ def get_shopping_list(driver: Driver) -> list:
 
 async def update_local_shopping_list(driver: Driver, config) -> None:
     """Update the local shopping list."""
-    shopping_list = get_shopping_list(driver)
+    shopping_list_items = get_shopping_list(driver)
 
     ha_ws = HomeAssistantWebsocket(config["ha_url"], config["ha_token"], logger=logger)
 
@@ -100,9 +100,9 @@ async def update_local_shopping_list(driver: Driver, config) -> None:
 
         existing_item_names = [item["summary"].lower() for item in existing_items]
 
-        for item in shopping_list:
-            if item.lower() not in existing_item_names:
-                await ha_ws.add_todo_list_item(item)
+        for shopping_list_item in shopping_list_items:
+            if shopping_list_item.lower() not in existing_item_names:
+                await ha_ws.add_todo_list_item(shopping_list_item)
 
     finally:
         await ha_ws.close()
@@ -172,8 +172,9 @@ def add_shopping_list_item(driver: Driver, item: str) -> bool:
     """Add an item to the shopping list."""
 
     shopping_list_items = get_shopping_list(driver)
-    if item in shopping_list_items:
-        return False
+    for shopping_list_item in shopping_list_items:
+        if shopping_list_item.lower() == item.lower():
+            return False
     add_item_button = driver.find_element(By.CSS_SELECTOR, ".list-header")
     add_item_button.click()
     add_item_input = driver.find_element(By.CSS_SELECTOR, ".list-header input")
@@ -193,7 +194,7 @@ def update_shopping_list_item(driver: Driver, item: str, new_item: str) -> bool:
     item_found = False
 
     for shopping_list_item in shopping_list_items:
-        if shopping_list_item.text == item:
+        if shopping_list_item.text.lower() == item.lower():
             item_found = True
             inner_div = shopping_list_item
             while inner_div.get_attribute("class") != "inner":
@@ -223,7 +224,7 @@ def complete_shopping_list_item(driver: Driver, item: str) -> bool:
     item_found = False
 
     for shopping_list_item in shopping_list_items:
-        if shopping_list_item.text == item:
+        if shopping_list_item.text.lower() == item.lower():
             item_found = True
             inner_div = shopping_list_item
             while inner_div.get_attribute("class") != "inner":
@@ -246,7 +247,7 @@ def remove_shopping_list_item(driver: Driver, item: str) -> bool:
     item_found = False
 
     for shopping_list_item in shopping_list_items:
-        if shopping_list_item.text == item:
+        if shopping_list_item.text.lower() == item.lower():
             item_found = True
             inner_div = shopping_list_item
             while inner_div.get_attribute("class") != "inner":
