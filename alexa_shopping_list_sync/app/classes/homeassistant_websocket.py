@@ -106,6 +106,7 @@ class HomeAssistantWebsocket:
             return await self.get_todo_list_items()  # Retry fetching items
         except Exception as e:
             self.logger.error(f"An error occurred while fetching items: {e}")
+            return None
 
     async def add_todo_list_item(self, item_name):
         """Add a new item to the todo/shopping list in Home Assistant."""
