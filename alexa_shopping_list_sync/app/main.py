@@ -98,10 +98,10 @@ async def update_local_shopping_list(driver: Driver, config) -> None:
     try:
         existing_items = await ha_ws.get_todo_list_items()
 
-        existing_item_names = [item["summary"].lower() for item in existing_items]
-
         if existing_items is None:
             existing_item_names = []
+        else:
+            existing_item_names = [item["summary"].lower() for item in existing_items]
 
         for shopping_list_item in shopping_list_items:
             if shopping_list_item.lower() not in existing_item_names:
