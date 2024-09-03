@@ -1,3 +1,7 @@
+## 0.1.5
+
+- Potential fix for [#12](https://github.com/SavageCore/HA_Addons/issues/12)
+
 ## 0.1.4
 
 - 2nd attempt at fixing [#9](https://github.com/SavageCore/HA_Addons/issues/9)!
