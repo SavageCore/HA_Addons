@@ -1,3 +1,7 @@
+## 0.1.6
+
+- Support German language. `entity_id` changes as discussed in [#12](https://github.com/SavageCore/HA_Addons/issues/12)
+
 ## 0.1.5
 
 - Potential fix for [#12](https://github.com/SavageCore/HA_Addons/issues/12)
