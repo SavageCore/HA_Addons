@@ -152,7 +152,7 @@ If you receive the following error message:
 [ERROR] An error occurred while fetching items: Failed to get items: {'code': 'home_assistant_error', 'message': 'Service call requested response data but did not match any entities'}
 ```
 
-This is because the add-on is unable to find the `todo.shopping_list` entity in Home Assistant. Please create an [issue](https://github.com/SavageCore/HA_Addons/issues/new?template=language_support.md) listing your Home Assistant language and the entity ID of your shopping list so I can add support for it. You can find the entity ID by going to `Developer Tools` => `States` and searching for `todo`. For example, Deutsch (German) is `todo.einkaufsliste`.
+This is because the add-on is unable to find the `todo.shopping_list` entity in Home Assistant. Please create an [issue](https://github.com/SavageCore/HA_Addons/issues/new?template=language_support.yaml) listing your Home Assistant language and the entity ID of your shopping list so I can add support for it. You can find the entity ID by going to `Developer Tools` => `States` and searching for `todo`. For example, Deutsch (German) is `todo.einkaufsliste`.
 
 [ko-fi-badge]: https://ko-fi.com/img/githubbutton_sm.svg
 [ko-fi-url]: https://ko-fi.com/E1E6P7VIQ
