@@ -3,6 +3,8 @@ import json
 import logging
 
 import websockets
+from classes.homeassistant_api import HomeAssistantAPI
+from constants.entity_id_mapping import entity_id_mapping
 
 
 class HomeAssistantWebsocket:
@@ -17,6 +19,8 @@ class HomeAssistantWebsocket:
         self.logger = logger or logging.getLogger(
             __name__
         )  # Use provided logger or create one
+        self.ha_api = HomeAssistantAPI(url, token, logger=logger)
+        self.entity_id = self.get_entity_id_for_language()
 
     async def connect(self):
         """Establish a connection to the Home Assistant WebSocket API."""
@@ -69,6 +73,11 @@ class HomeAssistantWebsocket:
         if auth_response.get("type") != "auth_ok":
             raise Exception("Authentication failed")
 
+    def get_entity_id_for_language(self):
+        language = self.ha_api.get_current_language()
+
+        return entity_id_mapping.get(language, "todo.shopping_list")
+
     async def get_todo_list_items(self):
         """Fetch the current todo/shopping list items from Home Assistant."""
         if self.websocket is None or self.websocket.closed:
@@ -80,7 +89,7 @@ class HomeAssistantWebsocket:
             "domain": "todo",
             "service": "get_items",
             "return_response": True,
-            "service_data": {"entity_id": "todo.shopping_list"},
+            "service_data": {"entity_id": self.entity_id},
         }
 
         self.request_id += 1  # Increment the request ID for the next request
@@ -94,7 +103,7 @@ class HomeAssistantWebsocket:
                 todo_list = (
                     response_data.get("result", {})
                     .get("response", {})
-                    .get("todo.shopping_list", {})
+                    .get(self.entity_id, {})
                     .get("items", [])
                 )
                 return [item for item in todo_list]
@@ -121,7 +130,7 @@ class HomeAssistantWebsocket:
             "type": "call_service",
             "domain": "todo",
             "service": "add_item",
-            "service_data": {"entity_id": "todo.shopping_list", "item": item_name},
+            "service_data": {"entity_id": self.entity_id, "item": item_name},
         }
 
         self.request_id += 1  # Increment the request ID for the next request
