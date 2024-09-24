@@ -106,7 +106,10 @@ class HomeAssistantWebsocket:
                     .get(self.entity_id, {})
                     .get("items", [])
                 )
-                return [item for item in todo_list]
+
+                return [
+                    item for item in todo_list if item.get("status") == "needs_action"
+                ]
             else:
                 raise Exception(f"Failed to get items: {response_data.get('error')}")
         except websockets.ConnectionClosed as e:
