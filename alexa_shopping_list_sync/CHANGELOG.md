@@ -1,3 +1,7 @@
+## 0.1.7
+
+- Fixing a bug where a shopping list item was not synced when the item in HA completed [#21](https://github.com/SavageCore/HA_Addons/issues/21)
+
 ## 0.1.6
 
 - Support German language. `entity_id` changes as discussed in [#12](https://github.com/SavageCore/HA_Addons/issues/12)
