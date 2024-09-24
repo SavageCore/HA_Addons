@@ -1,6 +1,6 @@
 ## 0.1.7
 
-- Fixing a bug where a shopping list item was not synced when the item in HA completed [#21](https://github.com/SavageCore/HA_Addons/issues/21)
+- Fixing a bug where a shopping list item was not synced when the item in HA is completed [#21](https://github.com/SavageCore/HA_Addons/issues/21)
 
 ## 0.1.6
 
