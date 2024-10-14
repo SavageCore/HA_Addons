@@ -1,5 +1,5 @@
 seleniumbase==4.31.6
-black==24.8.0
+black==24.10.0
 pyotp===2.9.0
 flask===3.0.3
 hypercorn===0.17.3
