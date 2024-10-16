@@ -57,7 +57,42 @@ The `ha_url` is the WebSocket URL of your Home Assistant instance. This is usual
 
 #### Home Assistant Setup
 
-The add-on will automatically add Alexa shopping list items to your Home Assistant shopping list every minute. You can then use the following automations to sync changes made to your Home Assistant shopping list back to Alexa. You can add these automations to your `automations.yaml` file.
+The add-on will automatically add Alexa shopping list items to your Home Assistant shopping list every minute.
+
+To enable Home Assistant to sync changes made to your shopping list back to Alexa, you will need to create a `rest_command`. You can do this by adding the following to your `configuration.yaml` file.
+
+```yaml
+rest_command:
+  add_shopping_list_item:
+    url: "http://localhost:5000/add_item"
+    method: post
+    payload: '{"item": "{{ item }}"}'
+    headers:
+      Content-Type: application/json
+
+  update_shopping_list_item:
+    url: "http://localhost:5000/update_item"
+    method: put
+    payload: '{"item": "{{ item }}", "new_item": "{{ new_item }}"}'
+    headers:
+      Content-Type: application/json
+
+  complete_shopping_list_item:
+    url: "http://localhost:5000/complete_item"
+    method: put
+    payload: '{"item": "{{ item }}"}'
+    headers:
+      Content-Type: application/json
+
+  remove_shopping_list_item:
+    url: "http://localhost:5000/remove_item"
+    method: post
+    payload: '{"item": "{{ item }}"}'
+    headers:
+      Content-Type: application/json
+```
+
+Now you can add these automations to your `automations.yaml` file.
 
 ```yaml
 automation:
@@ -113,35 +148,6 @@ automation:
       service: rest_command.remove_shopping_list_item
       data_template:
         item: "{{ trigger.event.data.item.name }}"
-
-rest_command:
-  add_shopping_list_item:
-    url: "http://localhost:5000/add_item"
-    method: post
-    payload: '{"item": "{{ item }}"}'
-    headers:
-      Content-Type: application/json
-
-  update_shopping_list_item:
-    url: "http://localhost:5000/update_item"
-    method: put
-    payload: '{"item": "{{ item }}", "new_item": "{{ new_item }}"}'
-    headers:
-      Content-Type: application/json
-
-  complete_shopping_list_item:
-    url: "http://localhost:5000/complete_item"
-    method: put
-    payload: '{"item": "{{ item }}"}'
-    headers:
-      Content-Type: application/json
-
-  remove_shopping_list_item:
-    url: "http://localhost:5000/remove_item"
-    method: post
-    payload: '{"item": "{{ item }}"}'
-    headers:
-      Content-Type: application/json
 ```
 
 # Troubleshooting
