@@ -4,5 +4,5 @@ pyotp===2.9.0
 flask===3.0.3
 hypercorn===0.17.3
 asyncio===3.4.3
-websockets===13.1
+websockets===14.0
 apscheduler===3.10.4
