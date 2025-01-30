@@ -5,6 +5,7 @@ import logging
 import websockets
 from classes.homeassistant_api import HomeAssistantAPI
 from constants.entity_id_mapping import entity_id_mapping
+from websockets.protocol import State
 
 
 class HomeAssistantWebsocket:
@@ -58,7 +59,7 @@ class HomeAssistantWebsocket:
 
     async def send(self, message):
         """Send a message to the WebSocket server, reconnect if necessary."""
-        if self.websocket is None or self.websocket.closed:
+        if self.websocket is None or self.websocket.state is State.CLOSED:
             await self.connect_with_retries()
         await self.websocket.send(message)
 
@@ -80,7 +81,7 @@ class HomeAssistantWebsocket:
 
     async def get_todo_list_items(self):
         """Fetch the current todo/shopping list items from Home Assistant."""
-        if self.websocket is None or self.websocket.closed:
+        if self.websocket is None or self.websocket.state is State.CLOSED:
             await self.connect_with_retries()
 
         request_message = {
@@ -125,7 +126,7 @@ class HomeAssistantWebsocket:
         if not item_name:
             return
 
-        if self.websocket is None or self.websocket.closed:
+        if self.websocket is None or self.websocket.state is State.CLOSED:
             await self.connect_with_retries()
 
         request_message = {
