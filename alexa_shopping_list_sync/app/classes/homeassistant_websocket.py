@@ -112,7 +112,7 @@ class HomeAssistantWebsocket:
                 ]
             else:
                 raise Exception(f"Failed to get items: {response_data.get('error')}")
-        except websockets.ConnectionClosed as e:
+        except websockets.exceptions.ConnectionClosed as e:
             self.logger.error(f"Connection closed while fetching items: {e}")
             await self.connect_with_retries()  # Attempt to reconnect
             return await self.get_todo_list_items()  # Retry fetching items
@@ -145,7 +145,7 @@ class HomeAssistantWebsocket:
             response_data = json.loads(response)
             if response_data.get("success") is False:
                 raise Exception(f"Failed to add item: {response_data.get('error')}")
-        except websockets.ConnectionClosed as e:
+        except websockets.exceptions.ConnectionClosed as e:
             self.logger.error(f"Connection closed while adding item: {e}")
             await self.connect_with_retries()  # Attempt to reconnect
             await self.add_todo_list_item(item_name, id)  # Retry adding the item
