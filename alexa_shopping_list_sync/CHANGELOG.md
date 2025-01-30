@@ -1,3 +1,7 @@
+## 0.1.8
+
+- Fix issue [#43](https://github.com/SavageCore/HA_Addons/issues/43) where the integration was not working with websockets 14.x
+
 ## 0.1.7
 
 - Fixing a bug where a shopping list item was not synced when the item in HA is completed [#21](https://github.com/SavageCore/HA_Addons/issues/21)
