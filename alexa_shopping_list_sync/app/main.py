@@ -33,8 +33,6 @@ logger.setLevel(logging.INFO)
 thread_event = threading.Event()
 
 
-
-
 def load_config():
     hass_path = "/data/options.json"
     win_path = "data/options.json"
@@ -88,20 +86,21 @@ def get_mfa_code() -> str:
     totp = pyotp.TOTP(config["mfa_secret"])
     return totp.now()
 
+
 def get_shopping_list(driver: Driver):
     """Get the shopping list items."""
     driver.get(config["list_url"])
     driver.implicitly_wait(10)
 
-    list_container = driver.find_element(By.CLASS_NAME, 'virtual-list')
+    list_container = driver.find_element(By.CLASS_NAME, "virtual-list")
 
     found = []
     last = None
     while True:
-        list_items = list_container.find_elements(By.CLASS_NAME, 'item-title')
+        list_items = list_container.find_elements(By.CLASS_NAME, "item-title")
         for item in list_items:
-            if item.get_attribute('innerText') not in found:
-                found.append(item.get_attribute('innerText'))
+            if item.get_attribute("innerText") not in found:
+                found.append(item.get_attribute("innerText"))
         if not list_items or last == list_items[-1]:
             # We've reached the end
             break
@@ -111,17 +110,18 @@ def get_shopping_list(driver: Driver):
 
     return found
 
+
 def get_shopping_list_item_element(driver, item: str):
     """Get the shopping list item element by its title."""
     driver.get(config["list_url"])
-    list_container = driver.find_element(By.CLASS_NAME, 'virtual-list')
+    list_container = driver.find_element(By.CLASS_NAME, "virtual-list")
 
     last = None
     while True:
-        list_items = list_container.find_elements(By.CLASS_NAME, 'inner')
+        list_items = list_container.find_elements(By.CLASS_NAME, "inner")
         for container in list_items:
-            title_element = container.find_element(By.CLASS_NAME, 'item-title')
-            if title_element.get_attribute('innerText') == item:
+            title_element = container.find_element(By.CLASS_NAME, "item-title")
+            if title_element.get_attribute("innerText") == item:
                 return container  # Return immediately when found
 
         if not list_items or last == list_items[-1]:
@@ -133,6 +133,7 @@ def get_shopping_list_item_element(driver, item: str):
         time.sleep(1)
 
     return None
+
 
 async def update_local_shopping_list(driver: Driver, config) -> None:
     """Update the local shopping list."""
@@ -155,6 +156,7 @@ async def update_local_shopping_list(driver: Driver, config) -> None:
     finally:
         await ha_ws.close()
 
+
 # Route to get the shopping list
 @app.route("/shopping_list", methods=["GET"])
 def get_list_route():
@@ -165,6 +167,7 @@ def get_list_route():
     except Exception as e:
         logger.error(f"Error getting shopping list: {e}")
         return jsonify({"status": "failure", "message": str(e)}), 500
+
 
 # Route to add an item to the shopping list
 @app.route("/add_item", methods=["POST"])
@@ -194,7 +197,10 @@ def update_item_route():
         )
     else:
         return jsonify(
-            {"status": "failure", "message": f"'{item}' not found in Alexa shopping list"}
+            {
+                "status": "failure",
+                "message": f"'{item}' not found in Alexa shopping list",
+            }
         )
 
 
@@ -204,11 +210,17 @@ def complete_item_route():
     item = request.json.get("item")
     if complete_shopping_list_item(driver, item):
         return jsonify(
-            {"status": "success", "message": f"Completed '{item}' in Alexa shopping list"}
+            {
+                "status": "success",
+                "message": f"Completed '{item}' in Alexa shopping list",
+            }
         )
     else:
         return jsonify(
-            {"status": "failure", "message": f"'{item}' not found in Alexa shopping list"}
+            {
+                "status": "failure",
+                "message": f"'{item}' not found in Alexa shopping list",
+            }
         )
 
 
@@ -218,12 +230,19 @@ def remove_item_route():
     item = request.json.get("item")
     if remove_shopping_list_item(driver, item):
         return jsonify(
-            {"status": "success", "message": f"Removed '{item}' from Alexa shopping list"}
+            {
+                "status": "success",
+                "message": f"Removed '{item}' from Alexa shopping list",
+            }
         )
     else:
         return jsonify(
-            {"status": "failure", "message": f"'{item}' not found in Alexa shopping list"}
+            {
+                "status": "failure",
+                "message": f"'{item}' not found in Alexa shopping list",
+            }
         )
+
 
 def add_shopping_list_item(driver: Driver, item: str) -> bool:
     """Add an item to the shopping list."""
@@ -237,15 +256,27 @@ def add_shopping_list_item(driver: Driver, item: str) -> bool:
     # Scroll to the top of the page to ensure the add button is visible
     driver.execute_script("window.scrollTo(0, 0);")
 
-    driver.find_element(By.CLASS_NAME, 'list-header').find_element(By.CLASS_NAME, 'add-symbol').click()
+    driver.find_element(By.CLASS_NAME, "list-header").find_element(
+        By.CLASS_NAME, "add-symbol"
+    ).click()
 
-    textfield = driver.find_element(By.CLASS_NAME, 'list-header').find_element(By.CLASS_NAME, 'input-box').find_element(By.TAG_NAME, 'input')
+    textfield = (
+        driver.find_element(By.CLASS_NAME, "list-header")
+        .find_element(By.CLASS_NAME, "input-box")
+        .find_element(By.TAG_NAME, "input")
+    )
     textfield.send_keys(item)
 
-    submit = driver.find_element(By.CLASS_NAME, 'list-header').find_element(By.CLASS_NAME, 'add-to-list').find_element(By.TAG_NAME, 'button')
+    submit = (
+        driver.find_element(By.CLASS_NAME, "list-header")
+        .find_element(By.CLASS_NAME, "add-to-list")
+        .find_element(By.TAG_NAME, "button")
+    )
     submit.click()
 
-    driver.find_element(By.CLASS_NAME, 'list-header').find_element(By.CLASS_NAME, 'cancel-input').click()
+    driver.find_element(By.CLASS_NAME, "list-header").find_element(
+        By.CLASS_NAME, "cancel-input"
+    ).click()
     time.sleep(1)
 
     return True
@@ -290,8 +321,8 @@ def complete_shopping_list_item(driver: Driver, item: str) -> bool:
         if element is None:
             return None
         try:
-            check_box = element.find_element(By.CLASS_NAME, 'custom-checkbox')
-            check_box_input = check_box.find_element(By.TAG_NAME, 'input')
+            check_box = element.find_element(By.CLASS_NAME, "custom-checkbox")
+            check_box_input = check_box.find_element(By.TAG_NAME, "input")
             driver.execute_script("arguments[0].click();", check_box_input)
 
             return True
@@ -310,7 +341,9 @@ def remove_shopping_list_item(driver: Driver, item: str) -> bool:
             return None
         try:
             # Find the delete button and click it
-            delete_button = element.find_element(By.CLASS_NAME, 'item-actions-2').find_element(By.TAG_NAME, 'button')
+            delete_button = element.find_element(
+                By.CLASS_NAME, "item-actions-2"
+            ).find_element(By.TAG_NAME, "button")
             delete_button.click()
             return True
         except StaleElementReferenceException:
@@ -318,6 +351,7 @@ def remove_shopping_list_item(driver: Driver, item: str) -> bool:
             time.sleep(1)
 
     return False
+
 
 def run_update():
     try:
