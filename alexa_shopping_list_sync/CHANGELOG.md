@@ -1,3 +1,6 @@
+## 0.1.9
+- Improve the handling of shopping list items by scrolling the virtual list to ensure we capture all items.
+
 ## 0.1.8
 
 - Fix issue [#43](https://github.com/SavageCore/HA_Addons/issues/43) where the integration was not working with websockets 14.x

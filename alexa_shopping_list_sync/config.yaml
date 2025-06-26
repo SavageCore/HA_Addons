@@ -1,6 +1,6 @@
 name: "Alexa Shopping List Sync"
 description: "Sync your Alexa Shopping List with Home Assistant"
-version: "0.1.8"
+version: "0.1.9"
 slug: "alexa_shopping_list_sync"
 init: false
 url: "https://github.com/SavageCore/HA_Addons/tree/main/alexa_shopping_list_sync"
