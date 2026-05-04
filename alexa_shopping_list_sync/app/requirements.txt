@@ -1,4 +1,4 @@
-seleniumbase==4.44.12
+seleniumbase==4.48.4
 black==26.3.1
 pyotp===2.9.0
 flask===3.1.3
